@@ -1,0 +1,25 @@
+services :
+  mysql_db:
+    image: mysql
+    container_name: mysql_cz
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: exampleRootPwd
+      MYSQL_USER: exampleUsr
+      MYSQL_PASSWORD: examplePwd
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  flyway:
+    image: flyway/flyway
+    container_name: flyway_cz
+    volumes:
+      - ./sql:/flyway/sql:ro
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
