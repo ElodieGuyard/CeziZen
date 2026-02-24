@@ -4,6 +4,7 @@ services :
     container_name: mysql_cz
     restart: always
     environment:
+      MYSQL_DATABASE: cezizen
       MYSQL_ROOT_PASSWORD: exampleRootPwd
       MYSQL_USER: exampleUsr
       MYSQL_PASSWORD: examplePwd
@@ -11,14 +12,20 @@ services :
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL","mysql --user=root --password=exampleRootPwd --execute=\"SHOW DATABASES;\""]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
   flyway:
     image: flyway/flyway
+    command: -url=jdbc:mysql://mysql_db:3306/cesizen -schemas=cezizen -user=root -password=exampleRootPwd -connectRetries=60 migrate
     container_name: flyway_cz
     volumes:
       - ./sql:/flyway/sql:ro
     depends_on:
-      mysql:
+      mysql_db:
         condition: service_healthy
 
 volumes:
