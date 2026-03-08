@@ -20,15 +20,4 @@ public class LoginController {
         return "login";
     }
 
-//    @Override
-//    protected void configure(final HttpSecurity http) throws Exception {
-//        http
-//                .formLogin()
-//                .loginPage("/login.html")
-//                .failureUrl("/login-error.html")
-//                .and()
-//                .logout()
-//                .logoutSuccessUrl("/home.html");
-//    }
-
 }
