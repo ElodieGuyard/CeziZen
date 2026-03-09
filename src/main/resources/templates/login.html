@@ -20,8 +20,8 @@
 <body>
 <p th:text="|Hello, please login !|" />
 
-<p th:if="${loginError}" class="error">Wrong user or password</p>
-<form th:action="@{/login.html}" method="post">
+<p th:if="${loginError}" class="error">Wrong user or password</p> <!-- si thymeleaf lit une erreur de security, il affichera ceci -->
+<form th:action="@{/login}" method="post"> <!--requête interceptée par security-->
     <label for="username">Username</label>:
     <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
     <label for="password">Password</label>:

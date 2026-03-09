@@ -20,3 +20,26 @@ controller → routes web
 service → logique métier
 repository → accès base de données
 security → configuration sécurité
+
+## fonctionnement global auth
+
+Utilisateur
+↓
+GET /dashboard
+↓
+Spring Security
+↓
+redirect /login
+↓
+LoginController
+↓
+login.html (Thymeleaf)
+↓
+POST /login (formulaire)
+↓
+Spring Security
+↓
+Authentification
+↓
+OK → /dashboard
+KO → /login?error

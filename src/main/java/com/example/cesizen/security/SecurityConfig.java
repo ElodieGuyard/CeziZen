@@ -20,7 +20,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/")        // redirection après logout
+                        .logoutSuccessUrl("/home")        // redirection après logout
                         .permitAll()
                 );
 
