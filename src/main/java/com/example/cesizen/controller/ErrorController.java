@@ -1,4 +1,4 @@
-package com.example.cesizen.Controller;
+package com.example.cesizen.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

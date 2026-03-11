@@ -1,13 +1,13 @@
-package com.example.cesizen.Controller;
+package com.example.cesizen.controller;
 
 import com.example.cesizen.model.User;
 import com.example.cesizen.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 //Based on https://spring.io/guides/gs/accessing-data-mysql
-@Controller // This means that this class is a Controller
-    @RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
+@RestController // This means that this class is a Controller
+@RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
 public class UserController {
 
         @Autowired // This means to get the bean called userRepository
@@ -22,13 +22,12 @@ public class UserController {
 
             User n = new User();
             n.setName(name);
-            n.setEmail(email);
             userRepository.save(n);
             return "Saved";
         }
 
         @GetMapping(path="/all")
-        public @ResponseBody Iterable<User> getAllUsers() {
+        public Iterable<User> getAllUsers() {
             // This returns a JSON or XML with the users
             return userRepository.findAll();
         }

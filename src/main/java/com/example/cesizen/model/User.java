@@ -1,19 +1,17 @@
 package com.example.cesizen.model;
 
 import jakarta.annotation.Nullable;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "utilisateur")
 public class User {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private @Nullable Integer id;
 
-    private String name;
-
-    private String email;
+    private String nom_utilisateur;
 
     public Integer getId() {
         return id;
@@ -24,19 +22,11 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return nom_utilisateur;
     }
 
     public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+        this.nom_utilisateur = name;
     }
 }
 
