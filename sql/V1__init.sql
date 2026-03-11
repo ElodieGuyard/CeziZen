@@ -1,4 +1,4 @@
--- V1: initial schema (MySQL 8) based on your class diagram + agreed constraints
+-- V1: initial schema (MySQL 8)
 
 CREATE TABLE utilisateur (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -20,8 +20,6 @@ CREATE TABLE categorie (
   UNIQUE KEY uk_categorie_nom (nom)
 );
 
--- Tu pourras faire évoluer cet ENUM via une migration V2 si tu ajoutes des types
--- Exemples init: ARTICLE, VIDEO, AUDIO, EXERCICE
 CREATE TABLE ressource (
   id BIGINT NOT NULL AUTO_INCREMENT,
   categorie_id BIGINT NOT NULL,
