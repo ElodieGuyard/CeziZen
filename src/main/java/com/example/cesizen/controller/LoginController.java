@@ -14,10 +14,10 @@ public class LoginController {
     }
 
     // Login form with error, GET
-    @RequestMapping("/login-error.html")
+/*    @RequestMapping("/login-error.html")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
         return "login";
-    }
+    }*/
 
 }

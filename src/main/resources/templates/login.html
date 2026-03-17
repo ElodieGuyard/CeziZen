@@ -1,5 +1,8 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="fr">
+
 <head>
     <title>CESI ZEN Login Page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -18,17 +21,20 @@
 
 </header>
 <body>
-<p th:text="|Hello, please login !|" />
-
-<p th:if="${loginError}" class="error">Wrong user or password</p> <!-- si thymeleaf lit une erreur de security, il affichera ceci -->
-<form th:action="@{/login}" method="post"> <!--requête interceptée par security-->
-    <label for="username">Username</label>:
-    <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
-    <label for="password">Password</label>:
-    <input type="password" id="password" name="password" /> <br />
+<h1>Please Log In</h1>
+<div th:if="${param.error}">
+    Invalid username and password.</div>
+<div th:if="${param.logout}">
+    You have been logged out.</div>
+<form th:action="@{/login}" method="post">
+    <div>
+        <input type="text" name="username" placeholder="Username"/>
+    </div>
+    <div>
+        <input type="password" name="password" placeholder="Password"/>
+    </div>
     <input type="submit" value="Log in" />
 </form>
-
 </body>
-<script src="JS/scripts.js"></script>
+
 </html>

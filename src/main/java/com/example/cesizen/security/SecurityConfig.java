@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -13,34 +12,46 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-/*//POST Login
-        http
-                .formLogin(form -> form
-                        .loginPage("/login")          // page login personnalisée
-                        .failureUrl("/login?error")   // redirection si erreur
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/home")        // redirection après logout
-                        .permitAll()
-                );
-
-        return http.build();*/
-
-/*            http
-                    .csrf(AbstractHttpConfigurer::disable)
+            http
                     .authorizeHttpRequests(auth -> auth
-                            .requestMatchers("/all").permitAll()
+                            // PUBLIC (non connecté)
+                            .requestMatchers(
+                                    "/",
+                                    "/home",
+                                    "/login",
+                                    "/register",
+                                    "/CSS/**", "/js/**", "/images/**", // à modifier
+                                    "/webjars/**",
+                                    "/favicon.ico",
+                                    "/api/**"
+                            ).permitAll()
+
+                            // SUPER ADMIN
+                            .requestMatchers("/super-admin/**").hasRole("SUPERADMIN") // à adapter
+
+                            // ADMIN (admin + super admin)
+                            .requestMatchers("/admin/**").hasAnyRole("ADMINISTRATOR", "SUPERADMIN")
+
+                            // CONNECTÉ (citizen, moderator, admin, super_admin)
+                            .requestMatchers("/app/**").authenticated()
+
+                            // le reste: connecté (au début, c’est plus simple)
                             .anyRequest().authenticated()
+                    )
+                    .formLogin(form -> form
+                            .loginPage("/login")
+                            .defaultSuccessUrl("/home", true)
+                            .permitAll()
+                    )
+                    .logout(logout -> logout
+                            .logoutUrl("/logout")
+                            .logoutSuccessUrl("/home"))
+
+                    .csrf(csrf -> csrf
+                            .ignoringRequestMatchers("/api/**") // Les API REST n'utilisent pas de session/CSRF
                     );
 
 
-            return http.build();
-        }*/
-
-        http
-                .csrf(csrf -> csrf.disable())  // désactive CSRF
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()); // tout est accessible
         return http.build();
+        }
     }
-}

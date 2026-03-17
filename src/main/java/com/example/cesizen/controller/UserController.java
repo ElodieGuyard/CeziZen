@@ -5,9 +5,11 @@ import com.example.cesizen.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 //Based on https://spring.io/guides/gs/accessing-data-mysql
 @RestController // This means that this class is a Controller
-@RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/api") // This means URL's start with /demo (after Application path)
 public class UserController {
 
         @Autowired // This means to get the bean called userRepository
@@ -15,14 +17,9 @@ public class UserController {
         private UserRepository userRepository;
 
         @PostMapping(path="/add") // Map ONLY POST Requests
-        public @ResponseBody String addNewUser (@RequestParam String name,
-                                                @RequestParam String email) { //TODO à modifier
+        public @ResponseBody String addNewUser (@RequestBody User user) {
             // @ResponseBody means the returned String is the response, not a view name
-            // @RequestParam means it is a parameter from the GET or POST request
-
-            User n = new User();
-            n.setName(name);
-            userRepository.save(n);
+            userRepository.save(user);
             return "Saved";
         }
 
@@ -37,8 +34,14 @@ public class UserController {
             return userRepository.findById(id).get();
         }
 
-        @PutMapping(path="/update")
+        @PutMapping(path="/update") // modifie seulement le nom de l'utilisateur et met à jour la date de modification
         public @ResponseBody String updateUser(@RequestParam Integer Id, @RequestParam String name){
+            userRepository.findById(Id).ifPresent(u -> {
+                u.setName(name);
+                u.setModifie_le(new Date());
+                userRepository.save(u);
+            });
+
             return "Updated";
         }
 

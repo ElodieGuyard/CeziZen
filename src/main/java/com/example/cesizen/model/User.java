@@ -59,12 +59,12 @@ public class User {
         this.nom_utilisateur = name;
     }
 
-    public Role getRole(Integer id){
+    public Role getRole(){
         return this.role;
     }
 
-    public Role setRole(Integer id){
-        return this.role;
+    public void setRole(Role role){
+        this.role = role;
     }
 
     public LocalDateTime getCree_le() {
@@ -99,15 +99,16 @@ public class User {
         this.deleted_at = deleted_at;
     }
 
-    public String getMDP(Integer id){
+    public String getMot_de_passe
+            (Integer id){
         return this.mot_de_passe;
     }
 
-    public void setMDP(String mot_de_passe) {
+    public void setMot_de_passe(String mot_de_passe) {
         this.mot_de_passe = mot_de_passe;
     }
 
-    public boolean isEnabled() { //compte actif ?
+    public boolean setEnabled() { //compte actif ?
         return enabled;
     }
 }
