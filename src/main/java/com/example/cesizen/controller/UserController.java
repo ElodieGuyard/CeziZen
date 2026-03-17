@@ -15,8 +15,8 @@ public class UserController {
         private UserRepository userRepository;
 
         @PostMapping(path="/add") // Map ONLY POST Requests
-        public @ResponseBody String addNewUser (@RequestParam String name
-                , @RequestParam String email) {
+        public @ResponseBody String addNewUser (@RequestParam String name,
+                                                @RequestParam String email) { //TODO à modifier
             // @ResponseBody means the returned String is the response, not a view name
             // @RequestParam means it is a parameter from the GET or POST request
 
@@ -30,5 +30,21 @@ public class UserController {
         public Iterable<User> getAllUsers() {
             // This returns a JSON or XML with the users
             return userRepository.findAll();
+        }
+
+        @GetMapping(path="/{id}")
+        public User getUser(@PathVariable Integer id) {
+            return userRepository.findById(id).get();
+        }
+
+        @PutMapping(path="/update")
+        public @ResponseBody String updateUser(@RequestParam Integer Id, @RequestParam String name){
+            return "Updated";
+        }
+
+        @DeleteMapping(path="/delete")
+        public @ResponseBody String deleteById(@RequestParam Integer Id){
+            userRepository.deleteById(Id);
+            return "Deleted"; // return http status 200 ?
         }
     }
