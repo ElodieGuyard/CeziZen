@@ -1,8 +1,8 @@
 package com.example.cesizen.model;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -10,19 +10,37 @@ import java.util.Date;
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private @Nullable Integer id;
-
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name = "nom_utilisateur", nullable = false)
     private String nom_utilisateur;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
     private Role role;
+    @Column(name = "mot_de_passe", nullable = false)
     private String mot_de_passe;
-    private Date cree_le;
+    @Column(name = "cree_le", nullable = false)
+    private java.time.LocalDateTime cree_le;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.cree_le == null) {
+            this.cree_le = java.time.LocalDateTime.now();
+        }
+    }
+
     private Date derniere_connexion;
     private Date modifie_le;
     private Date deleted_at;
-
+    private boolean enabled;
 
     public User() {}
+
+    public User(String nom_utilisateur, Role role, String mot_de_passe) {
+        this.nom_utilisateur = nom_utilisateur;
+        this.role = role;
+        this.mot_de_passe = mot_de_passe;
+    }
 
     public Integer getId() {
         return id;
@@ -32,9 +50,6 @@ public class User {
         this.id = id;
     }
 
-    public String getMDP(Integer id){
-        return this.mot_de_passe;
-    }
 
     public String getName() {
         return nom_utilisateur;
@@ -52,13 +67,13 @@ public class User {
         return this.role;
     }
 
-    public Date getCree_le() {
+    public LocalDateTime getCree_le() {
         return cree_le;
     }
 
-    public void setCree_le(Date cree_le) {
+/*    public void setCree_le(LocalDateTime cree_le) { //TODO Si le @prePersiste foncitonne, à priori inutile
         this.cree_le = cree_le;
-    }
+    }*/
 
     public Date getDerniere_connexion() {
         return derniere_connexion;
@@ -82,6 +97,18 @@ public class User {
 
     public void setDeleted_at(Date deleted_at) {
         this.deleted_at = deleted_at;
+    }
+
+    public String getMDP(Integer id){
+        return this.mot_de_passe;
+    }
+
+    public void setMDP(String mot_de_passe) {
+        this.mot_de_passe = mot_de_passe;
+    }
+
+    public boolean isEnabled() { //compte actif ?
+        return enabled;
     }
 }
 
