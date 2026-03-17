@@ -12,6 +12,9 @@ public class User {
     private @Nullable Integer id;
 
     private String nom_utilisateur;
+    private Role role;
+
+    public User() {}
 
     public Integer getId() {
         return id;
@@ -27,6 +30,14 @@ public class User {
 
     public void setName(String name) {
         this.nom_utilisateur = name;
+    }
+
+    public Role getRole(Integer id){
+        return this.role;
+    }
+
+    public Role setRole(Integer id){
+        return this.role;
     }
 }
 
