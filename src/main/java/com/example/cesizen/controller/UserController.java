@@ -34,6 +34,7 @@ public class UserController {
             return userRepository.findById(id).get();
         }
 
+        //TODO changer en RequestBody plutôt
         @PutMapping(path="/update") // modifie seulement le nom de l'utilisateur et met à jour la date de modification
         public @ResponseBody String updateUser(@RequestParam Integer Id, @RequestParam String name){
             userRepository.findById(Id).ifPresent(u -> {

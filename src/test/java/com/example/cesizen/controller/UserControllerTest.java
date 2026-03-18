@@ -31,15 +31,10 @@ class UserControllerTest {
     @BeforeEach
     void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-        //cet objet représente un point d’entrée au serveur MVC et de manipulation de différentes entrées REST de l’application.
+        //citation : "cet objet représente un point d’entrée au serveur MVC et de manipulation de différentes entrées REST de l’application.
         //Cet objet est instancié a partir du contexte web crée précédemment par annotation (@WebAppConfiguration),
-        // du coup on aura besoin de récupérer cette instance par injection Spring
+        // du coup on aura besoin de récupérer cette instance par injection Spring"
         //src : https://blog.zenika.com/2016/11/25/spring-mvc-test-dans-un-contexte-securise/
-    }
-
-    @Test
-    void contextLoads() {
-        // Juste vérifier que Spring démarre
     }
 
     @Test
@@ -60,5 +55,15 @@ class UserControllerTest {
                 .andExpect(content().string("Saved"));
 
         verify(userRepository).save(any(User.class)); // Vérifie que save() a été appelé 1x avec n'importe quel User
+    }
+
+    //TODO update user
+
+    @Test
+    void deleteUser() throws Exception {
+        mockMvc.perform(delete("/api/delete?Id=1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("Deleted"));
     }
 }
