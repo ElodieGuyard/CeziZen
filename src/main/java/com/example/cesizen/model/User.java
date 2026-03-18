@@ -12,14 +12,14 @@ public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "nom_utilisateur", nullable = false)
+    @Column(nullable = false)
     private String nom_utilisateur;
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
+    @Column(nullable = false)
     private Role role;
-    @Column(name = "mot_de_passe", nullable = false)
+    @Column(nullable = false)
     private String mot_de_passe;
-    @Column(name = "cree_le", nullable = false)
+    @Column(nullable = false)
     private java.time.LocalDateTime cree_le;
 
     @PrePersist

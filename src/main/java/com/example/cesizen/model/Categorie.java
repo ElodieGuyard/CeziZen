@@ -12,6 +12,7 @@ public class Categorie {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String nom;
 
     // Relation 1:N → Liste de Ressources

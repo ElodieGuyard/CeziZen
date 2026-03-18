@@ -13,12 +13,16 @@ public class Resource {
     private int id;
     // Clé étrangère vers Catégorie
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categorie_id")  // Colonne FK en base
+    @JoinColumn(name = "categorie_id", nullable = false)  // Colonne FK en base
     private Categorie categorie;
+    @Column(nullable = false)
     private String titre;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Type type;
+    @Column(nullable = false)
     private String contenu;
-    @Column(name = "cree_le", nullable = false)
+    @Column(nullable = false)
     private java.time.LocalDateTime cree_le;
     private java.time.LocalDateTime modifie_le;
 
