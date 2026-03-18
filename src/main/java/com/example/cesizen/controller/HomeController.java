@@ -1,4 +1,4 @@
-package com.example.cesizen.Controller;
+package com.example.cesizen.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

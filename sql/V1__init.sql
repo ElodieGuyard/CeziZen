@@ -1,4 +1,4 @@
--- V1: initial schema (MySQL 8) based on your class diagram + agreed constraints
+-- V1: initial schema (MySQL 8)
 
 CREATE TABLE utilisateur (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -9,6 +9,7 @@ CREATE TABLE utilisateur (
   derniere_connexion DATETIME NULL,
   modifie_le DATETIME NULL,
   deleted_at DATETIME NULL,
+  enabled boolean not null,
   PRIMARY KEY (id),
   UNIQUE KEY uk_utilisateur_nom_utilisateur (nom_utilisateur)
 );
@@ -20,8 +21,6 @@ CREATE TABLE categorie (
   UNIQUE KEY uk_categorie_nom (nom)
 );
 
--- Tu pourras faire évoluer cet ENUM via une migration V2 si tu ajoutes des types
--- Exemples init: ARTICLE, VIDEO, AUDIO, EXERCICE
 CREATE TABLE ressource (
   id BIGINT NOT NULL AUTO_INCREMENT,
   categorie_id BIGINT NOT NULL,
@@ -34,30 +33,6 @@ CREATE TABLE ressource (
   KEY idx_ressource_categorie_id (categorie_id),
   CONSTRAINT fk_ressource_categorie
     FOREIGN KEY (categorie_id) REFERENCES categorie(id)
-    ON DELETE RESTRICT
-);
-
-CREATE TABLE referentiel_emotions (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  emotion VARCHAR(120) NOT NULL,
-  emotion_base VARCHAR(120) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY uk_ref_emotions_emotion (emotion)
-);
-
-CREATE TABLE emotion_log (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  utilisateur_id BIGINT NOT NULL,
-  referentiel_emotion_id BIGINT NOT NULL,
-  date_log DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (id),
-  KEY idx_emotion_log_utilisateur_id (utilisateur_id),
-  KEY idx_emotion_log_ref_id (referentiel_emotion_id),
-  CONSTRAINT fk_emotion_log_utilisateur
-    FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id)
-    ON DELETE CASCADE,
-  CONSTRAINT fk_emotion_log_referentiel
-    FOREIGN KEY (referentiel_emotion_id) REFERENCES referentiel_emotions(id)
     ON DELETE RESTRICT
 );
 

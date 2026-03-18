@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="'Erreur ' + ${status}">Erreur</title>
+</head>
+<body>
+<div>
+    <h1>Oups ! Une erreur est survenue</h1>
+    <p>
+        <strong>Code d'erreur : </strong>
+        <span th:text="${status}">500</span>
+    </p>
+    <p>
+        <strong>Message : </strong>
+        <span th:text="${error} ?: 'Erreur inconnue'">Erreur inconnue</span>
+    </p>
+    <p th:if="${message != null and !message.isEmpty()}">
+        <strong>Détails : </strong>
+        <span th:text="${message}">Détails de l'erreur</span>
+    </p>
+    <a th:href="@{/}">Retour à l'accueil</a>
+</div>
+</body>
+</html>
