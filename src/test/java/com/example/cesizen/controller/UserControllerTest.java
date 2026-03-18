@@ -1,13 +1,18 @@
 package com.example.cesizen.controller;
 
+import com.example.cesizen.model.User;
+import com.example.cesizen.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -19,6 +24,9 @@ class UserControllerTest {
     private WebApplicationContext context;
 
     private MockMvc mockMvc;
+
+    @MockitoBean
+    UserRepository userRepository;  // FAKE DB, évite de charger le nécessaire à communication avec la vrai DB et d'écrire des données de tests dedans
 
     @BeforeEach
     void setup() {
@@ -38,10 +46,14 @@ class UserControllerTest {
 
     @Test
     void addNewUser() throws Exception {
-        mockMvc.perform(post("/api/add")
-                        .contentType("application/json")
-                        .content("{}"))
+
+        mockMvc.perform(post("/api/add") //Simule une vraie requête HTTP POST
+                        .contentType("application/json") // Son contenu sera au forma JSON
+                        .content("{\"name\":\"test\", \"role\":\"USER\", \"password\":\"test\"}")) //Voici son contneu
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk()) //Vérifie le statut HTTP 200 OK
+                .andExpect(content().string("Saved"));
+
+        verify(userRepository).save(any(User.class)); // Vérifie que save() a été appelé 1x avec n'importe quel User
     }
 }
