@@ -43,3 +43,5 @@ Authentification
 ↓
 OK → /dashboard
 KO → /login?error
+
+api/add OK
