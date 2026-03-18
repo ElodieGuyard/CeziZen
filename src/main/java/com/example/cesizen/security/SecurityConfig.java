@@ -30,19 +30,17 @@ public class SecurityConfig {
                                     "/CSS/**", "/js/**", "/images/**", // à modifier
                                     "/webjars/**",
                                     "/favicon.ico",
-                                    "/api/**"
+                                    "/api/**",
+                                    "/sos"
                             ).permitAll()
 
-                            // SUPER ADMIN
-                            .requestMatchers("/super-admin/**").hasRole("SUPERADMIN") // à adapter
-
-                            // ADMIN (admin + super admin)
+                            // ADMIN (admin)
                             .requestMatchers("/admin/**").hasAnyRole("ADMINISTRATOR", "SUPERADMIN")
 
-                            // CONNECTÉ (citizen, moderator, admin, super_admin)
+                            // CONNECTÉ (citizen, admin)
                             .requestMatchers("/app/**").authenticated()
 
-                            // le reste: connecté (au début, c’est plus simple)
+                            // le reste: connecté (au début, c’est plus simple askip)
                             .anyRequest().authenticated()
                     )
                     .formLogin(form -> form
