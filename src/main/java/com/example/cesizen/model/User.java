@@ -99,7 +99,7 @@ public class User {
     }
 
     public String getMot_de_passe
-            (Integer id){
+            (){
         return this.mot_de_passe;
     }
 
