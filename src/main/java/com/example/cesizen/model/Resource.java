@@ -32,6 +32,15 @@ public class Resource {
             this.cree_le = java.time.LocalDateTime.now();
         }
     }
+    public Resource(Categorie categorie, String titre, Type type, String contenu){
+        this.categorie = categorie;
+        this.titre = titre;
+        this.type = type;
+        this.contenu = contenu;
+    }
+
+    public Resource(){
+    }
 
     public int getId() {
         return id;

@@ -1,0 +1,34 @@
+    <!DOCTYPE HTML>
+    <html xmlns:th="http://www.thymeleaf.org">
+        <head>
+            <title>CESI ZEN Home page</title>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="CSS/styles.css">
+        </head>
+        <header>
+            <nav class="menu">
+                <ul class="menu-links">
+                    <li><a href="/home">ACCUEIL</a></li>
+                    <li><a href="/ressources">RESSOURCES</a></li>
+                    <li><a href="/categories">CATEGORIES</a></li>
+                    <li><a href="/sos">SOS</a></li>
+                </ul>
+                <div class="menu-toggle">☰</div>
+                <img src="images/logoCeziZen.png" alt="logo cesizen" style="float:right" width="7%"/>
+            </nav>
+
+        </header>
+        <body>
+        <div class="main-container">
+            <h1>Liste des ressources</h1>
+            <ul>
+                <li th:each="res : ${ressources}">
+                    <strong th:text="${res.type}">Type</strong> -
+                    <span th:text="${res.titre}">Titre</span>
+                </li>
+            </ul>
+        </div>
+        <script src="JS/scripts.js"></script>
+        </body>
+    </html>
