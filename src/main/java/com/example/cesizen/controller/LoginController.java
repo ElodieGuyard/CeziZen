@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class LoginController {
 //source : https://www.thymeleaf.org/doc/articles/springsecurity.html
-    // Login form, GET
+
     @RequestMapping("/login")
     public String login() {
         return "login";
