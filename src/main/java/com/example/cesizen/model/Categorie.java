@@ -19,6 +19,13 @@ public class Categorie {
     @OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Resource> ressources = new ArrayList<>();
 
+    public Categorie() {};
+
+    // désérialisation string vers Int
+    public Categorie(String id) {
+        this.id = Integer.parseInt(id);
+    }
+
     public String getNom() {
         return nom;
     }
