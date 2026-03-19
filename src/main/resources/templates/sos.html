@@ -1,22 +1,58 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>CESI ZEN Home page</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="CSS/styles.css">
-</head>
-<header>
-    <nav class="menu">
-        <ul class="menu-links">
-            <li><a href="/home">ACCUEIL</a></li>
-            <li><a href="#">CATEGORIES</a></li>
-            <li><a href="#">SOS</a></li>
-        </ul>
-        <div class="menu-toggle">☰</div>
-        <img src="images/logoCeziZen.png" alt="Grapefruit slice atop a pile of other slices" style="float:right" width="7%"/>
-    </nav>
-    </header>
-<body>
+    <!DOCTYPE HTML>
+    <html xmlns:th="http://www.thymeleaf.org">
+        <head>
+            <title>CESI ZEN Home page</title>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="CSS/styles.css">
+        </head>
+        <header>
+            <nav class="menu">
+                <ul class="menu-links">
+                    <li><a href="/home">ACCUEIL</a></li>
+                    <li><a href="/ressources">RESSOURCES</a></li>
+                    <li><a href="/categories">CATEGORIES</a></li>
+                    <li><a href="/sos">SOS</a></li>
+                </ul>
+                <div class="menu-toggle">☰</div>
+                <img src="images/logoCeziZen.png" alt="logo cesizen" style="float:right" width="7%"/>
+            </nav>
+            </header>
+            <body>
+                <div class="main-container">
+                    <h1>Numéro d'urgences</h1>
+                    <ul>
+                        <li> 15 : Samu pour une urgence médicale</li>
+                        <li> 17 : Police secours pour signaler une infraction</li>
+                        <li> 18 : Pompier situation de péril ou accident</li>
+                        <li> 114 : Urgence 144 pour les personnes sourdes, sourdaveugles, malentendantes et aphasiques</li>
+                        <li> 196 et canal 16 : En mer pour un sauvetage en mer. Depuis le littoral, composez le 196 ou le 112. En mer, privilégiez le canal 16 de la radio VHF</li>
+                        <li> 112 : Depuis l'Europe pour une urgence médicale, infraction, péril</li>
+                    </ul>
+                    <p>Source : <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F33954" target=“_blank”>Site web du service publique</a></p>
 
-</body>
-</html>
+                    <h1>Violences conjugales</h1>
+                    <p>La ligne téléphonique nationale 3919 informe et oriente les femmes victimes de violences conjugales de tous types. Le numéro de téléphone 3919, créé et piloté par la Fédération nationale Solidarité Femmes depuis plus de 30 ans, est destiné aux femmes victimes de tous types de violences sexistes :</p>
+                    <ul>
+                        <li>violences conjugales (violences psychologiques, verbales, économiques, administratives, etc.) ;</li>
+                        <li>violences sexuelles ;</li>
+                        <li>mariages forcés ;</li>
+                        <li>mutilations sexuelles féminines ;</li>
+                        <li>violences au travail.</li>
+                    </ul>
+                    <p>En fonction de leur situation, les femmes sont orientées vers les associations locales ou nationales partenaires les mieux à même de leur apporter une réponse ou un accompagnement.
+
+                    Le 3919 est un numéro gratuit et anonyme ; il est accessible 24h/24 et 7j/7. Il s'adresse également à l'entourage des victimes.</p>
+
+                    <h2>Le nouveau tchat proposé par le 3919</h2>
+
+                    <p>Depuis le 2 février, un tchat du 3919 est par ailleurs accessible sur le site de la Fédération nationale Solidarité Femmes (cliquez sur « joindre le 3919 », puis sur « par tchat »).</p>
+
+                    <p>Cette messagerie instantanée est ouverte du lundi au vendredi, de 13h à 20h.</p>
+
+                    <p>Les réponses sont délivrées par des personnes professionnelles, formées à l’écoute et à la prise en charge des femmes victimes de violences. L’intelligence artificielle n’est pas utilisée au sein de ce tchat.</p>
+                        <p>Source : <a href="https://www.service-public.gouv.fr/particuliers/actualites/A16929" target=“_blank”>Site web du service publique</a></p>
+                </div>
+                <script src="JS/scripts.js"></script>
+            </body>
+    </html>
