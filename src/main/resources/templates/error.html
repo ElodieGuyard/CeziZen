@@ -12,10 +12,11 @@
 <header>
     <nav class="menu">
         <ul class="menu-links">
-            <li><a href="/home">ACCUEIL</a></li>
-            <li><a href="/ressources">RESSOURCES</a></li>
-            <li><a href="/categories">CATEGORIES</a></li>
-            <li><a href="/sos">SOS</a></li>
+            <li><a th:href="@{/home}">ACCUEIL</a></li>
+            <li><a th:href="@{/ressources}">RESSOURCES</a></li>
+            <li><a th:href="@{/categories}">CATEGORIES</a></li>
+            <li><a th:href="@{/respiration}">EXERCICE</a></li>
+            <li><a th:href="@{/sos}">SOS</a></li>
         </ul>
         <div class="menu-toggle">☰</div>
         <img th:src="@{/images/logoCeziZen.png}" alt="logo cesizen" style="float:right" width="7%"/>
@@ -38,6 +39,6 @@
     </p>
     <a th:href="@{/}">Retour à l'accueil</a>
 </div>
-<script src="JS/scripts.js"></script>
+<script th:src="@{/JS/scripts.js}"></script>
 </body>
 </html>

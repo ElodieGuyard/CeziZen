@@ -9,13 +9,14 @@
         <header>
             <nav class="menu">
                 <ul class="menu-links">
-                    <li><a href="/home">ACCUEIL</a></li>
-                    <li><a href="/ressources">RESSOURCES</a></li>
-                    <li><a href="/categories">CATEGORIES</a></li>
-                    <li><a href="/sos">SOS</a></li>
+                    <li><a th:href="@{/home}">ACCUEIL</a></li>
+                    <li><a th:href="@{/ressources}">RESSOURCES</a></li>
+                    <li><a th:href="@{/categories}">CATEGORIES</a></li>
+                    <li><a th:href="@{/respiration}">EXERCICE</a></li>
+                    <li><a th:href="@{/sos}">SOS</a></li>
                 </ul>
                 <div class="menu-toggle">☰</div>
-                <img src="images/logoCeziZen.png" alt="logo cesizen" style="float:right" width="7%"/>
+                <img th:src="@{/images/logoCeziZen.png}" alt="logo cesizen" style="float:right" width="7%"/>
             </nav>
             </header>
             <body>
@@ -53,6 +54,6 @@
                     <p>Les réponses sont délivrées par des personnes professionnelles, formées à l’écoute et à la prise en charge des femmes victimes de violences. L’intelligence artificielle n’est pas utilisée au sein de ce tchat.</p>
                         <p>Source : <a href="https://www.service-public.gouv.fr/particuliers/actualites/A16929" target=“_blank”>Site web du service publique</a></p>
                 </div>
-                <script src="JS/scripts.js"></script>
+                <script th:src="@{/JS/scripts.js}"></script>
             </body>
     </html>
