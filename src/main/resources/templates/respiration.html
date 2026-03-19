@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <title>Cohérence cardiaque</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" th:href="@{/CSS/styles.css}">
+    <style>
+        body{
+            margin:0;
+            height:100vh;
+            display:block;
+            align-items:center;
+            justify-content:center;
+            color:#124375;
+        }
+
+        .wrap{
+            text-align:center;
+        }
+
+        .cercle{
+            width:180px;
+            height:180px;
+            border-radius:50%;
+            background: #124375;
+            opacity:50;
+            margin:0 auto 18px;
+            animation:respire 10s ease-in-out infinite; /* 5s inspire + 5s expire */
+        }
+
+        .mot{
+            letter-spacing:.25em;
+            font-weight:600;
+            font-size:14px;
+            opacity:.85;
+        }
+
+        /* On affiche "INSPIRE" sur la 1ère moitié, "EXPIRE" sur la 2ème */
+        .inspire{ animation:afficheInspire 10s linear infinite; }
+        .expire { animation:afficheExpire  10s linear infinite; }
+
+        @keyframes respire{
+            0%,100%{ transform:scale(.7); } /* expire */
+            50%    { transform:scale(1.0); } /* inspire */
+        }
+
+        @keyframes afficheInspire{
+            0%,49.9%{ opacity:1; }
+            50%,100%{ opacity:0; }
+        }
+
+        @keyframes afficheExpire{
+            0%,49.9%{ opacity:0; }
+            50%,100%{ opacity:1; }
+        }
+    </style>
+</head>
+<header>
+    <nav class="menu">
+        <ul class="menu-links">
+            <li><a th:href="@{/home}">ACCUEIL</a></li>
+            <li><a th:href="@{/ressources}">RESSOURCES</a></li>
+            <li><a th:href="@{/categories}">CATEGORIES</a></li>
+            <li><a th:href="@{/respiration}">EXERCICE</a></li>
+            <li><a th:href="@{/sos}">SOS</a></li>
+        </ul>
+        <div class="menu-toggle">☰</div>
+        <img th:src="@{/images/logoCeziZen.png}" alt="logo cesizen" style="float:right" width="7%"/>
+    </nav>
+</header>
+<body>
+<div class="wrap">
+    <div class="cercle" aria-hidden="true"></div>
+    <div class="mot">
+        <span class="inspire">INSPIRE</span>
+        <span class="expire">EXPIRE</span>
+    </div>
+</div>
+<script th:src="@{/JS/scripts.js}"></script>
+</body>
+</html>
