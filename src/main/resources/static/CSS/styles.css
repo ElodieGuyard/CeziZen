@@ -7,12 +7,51 @@
 body {
     font-family: 'Poppins', sans-serif;
 }
+h1 {
+    padding: 20px 0;
+}
+
+h2 {
+    padding: 15px 0;
+}
+
+p {
+    text-indent: 50px;
+    padding-bottom: 10px;
+}
+
+ul {
+    padding-left: 50px;
+    padding-bottom: 10px;
+}
+
+/* Container principal avec marges responsives */
+.main-container {
+    max-width: 1200px;    /* Largeur max desktop */
+    margin: 0 auto;       /* Centre horizontal */
+    padding: 20px 15px;   /* Marges gauche/droite */
+}
+
+/* Mobile : moins de marge */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 20px 10px;  /* Moins de marge sur mobile */
+    }
+}
+
+/* Très petit écran */
+@media (max-width: 480px) {
+    .main-container {
+        padding: 20px 5px;   /* Marge minimale */
+    }
+}
 
 .menu {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 15px 30px;
+    position: relative;
 }
 
 .menu-links {
@@ -28,7 +67,11 @@ body {
 }
 
 .menu-links a:hover {
-    color: #00bcd4;
+    color: #00bcd4; /* Sur desktop */
+}
+
+.menu-links a:active {
+    color: #00bcd4; /* Sur mobile quand on tape */
 }
 
 .menu-toggle {
@@ -42,7 +85,7 @@ body {
     .menu-links {
         display: none;
         flex-direction: column;
-        background-color: #222;
+        background-color: #c9c9c9;
         position: absolute;
         top: 60px;
         left: 0;
