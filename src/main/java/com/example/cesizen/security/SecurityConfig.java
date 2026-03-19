@@ -27,11 +27,18 @@ public class SecurityConfig {
                                     "/login",
                                     "/api/auth",
                                     "/register",
-                                    "/CSS/**", "/js/**", "/images/**", // à modifier
+                                    "/CSS/**", "/JS/**", "/images/**", // à modifier
                                     "/webjars/**",
                                     "/favicon.ico",
                                     "/api/**",
-                                    "/sos"
+                                    "/sos",
+                                    "/categories",
+                                    "/ressources",
+                                    "/ressources/add",
+                                    "/ressource/images/logoCeziZen.png",
+                                    "/users/create",
+                                    "/users/create/CSS/styles.css",
+                                    "/users/create/JS/scripts.js"
                             ).permitAll()
 
                             // ADMIN (admin)
