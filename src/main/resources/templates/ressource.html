@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CESI ZEN Home page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/CSS/styles.css}">
+</head>
+<header>
+    <nav class="menu">
+        <ul class="menu-links">
+            <li><a th:href="@{/home}">ACCUEIL</a></li>
+            <li><a th:href="@{/ressources}">RESSOURCES</a></li>
+            <li><a th:href="@{/categories}">CATEGORIES</a></li>
+            <li><a th:href="@{/respiration}">EXERCICE</a></li>
+            <li><a th:href="@{/sos}">SOS</a></li>
+        </ul>
+        <div class="menu-toggle">☰</div>
+        <img th:src="@{/images/logoCeziZen.png}" alt="logo cesizen" style="float:right" width="7%"/>
+    </nav>
+</header>
+    <body>
+    <div class="main-container">
+        <a th:href="@{/ressources}">← Retour à la liste</a>
+
+        <h1 th:text="${ressource.titre}">Titre</h1>
+
+        <p>
+            <strong>Type :</strong> <span th:text="${ressource.type}">ARTICLE</span>
+        </p>
+
+        <p th:if="${ressource.categorie != null}">
+            <strong>Catégorie :</strong> <span th:text="${ressource.categorie.nom}">Respiration</span>
+        </p>
+
+        <hr/>
+
+        <div th:text="${ressource.contenu}">
+            Contenu
+        </div>
+    </div>
+
+    <script th:src="@{/JS/scripts.js}"></script>
+    </body>
+    </html>
