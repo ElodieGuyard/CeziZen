@@ -27,6 +27,7 @@
                 <li th:each="res : ${ressources}">
                     <strong th:text="${res.type}">Type</strong> -
                     <span th:text="${res.titre}">Titre</span>
+                    <a th:href="@{/ressources/{id}(id=${res.id})}">Lien</a>
                 </li>
             </ul>
         </div>
