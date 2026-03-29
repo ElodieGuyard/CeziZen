@@ -108,11 +108,11 @@ public class User {
         this.mot_de_passe = mot_de_passe;
     }
 
-    public boolean setEnabled() { //compte actif ?
-        return enabled;
+    public void setEnabled() { //compte actif ?
+        this.enabled = true;
     }
 
-    public boolean setDisable() {
-        return enabled = false;
+    public void setDisable() {
+        this.enabled = false;
     }
 }
