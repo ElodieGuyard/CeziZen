@@ -10,7 +10,7 @@ import java.util.Date;
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
     private String nom_utilisateur;
@@ -34,7 +34,8 @@ public class User {
     private Date deleted_at;
     private boolean enabled;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String nom_utilisateur, Role role, String mot_de_passe) {
         this.nom_utilisateur = nom_utilisateur;
@@ -58,11 +59,11 @@ public class User {
         this.nom_utilisateur = name;
     }
 
-    public Role getRole(){
+    public Role getRole() {
         return this.role;
     }
 
-    public void setRole(Role role){
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -99,7 +100,7 @@ public class User {
     }
 
     public String getMot_de_passe
-            (){
+            () {
         return this.mot_de_passe;
     }
 
@@ -110,5 +111,8 @@ public class User {
     public boolean setEnabled() { //compte actif ?
         return enabled;
     }
-}
 
+    public boolean setDisable() {
+        return enabled = false;
+    }
+}
