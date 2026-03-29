@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav class="menu">
+    <ul class="menu-links">
+        <li><a th:href="@{/home}">ACCUEIL</a></li>
+        <li><a th:href="@{/ressources}">RESSOURCES</a></li>
+        <li><a th:href="@{/categories}">CATEGORIES</a></li>
+        <li><a th:href="@{/respiration}">EXERCICE</a></li>
+        <li><a th:href="@{/sos}">SOS</a></li>
+    </ul>
+    <div class="menu-toggle">☰</div>
+    <img th:src="@{/images/logoCeziZen.png}" alt="logo cesizen" style="float:right" width="7%"/>
+    <img th:src="@{/images/icon_user_connexion.svg}" alt="icône de connexion utilisateur" style="float:right"/>
+</nav>
+</body>
