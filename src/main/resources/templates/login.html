@@ -10,18 +10,7 @@
     <link rel="stylesheet" href="CSS/styles.css">
 </head>
 <header>
-    <nav class="menu">
-        <ul class="menu-links">
-            <li><a th:href="@{/home}">ACCUEIL</a></li>
-            <li><a th:href="@{/ressources}">RESSOURCES</a></li>
-            <li><a th:href="@{/categories}">CATEGORIES</a></li>
-            <li><a th:href="@{/respiration}">EXERCICE</a></li>
-            <li><a th:href="@{/sos}">SOS</a></li>
-        </ul>
-        <div class="menu-toggle">☰</div>
-        <img th:src="@{/images/logoCeziZen.png}" alt="logo cesizen" style="float:right" width="7%"/>
-    </nav>
-
+    <div th:replace="fragments/navFragment :: nav"></div>
 </header>
 <body>
 <h1>Please Log In</h1>

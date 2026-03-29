@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CESI ZEN Home page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/CSS/styles.css}">
+</head>
+<header>
+    <div th:replace="fragments/navFragment :: nav"></div>
+</header>
+    <body>
+    <div class="main-container">
+        <a th:href="@{/ressources}">← Retour à la liste</a>
+
+        <h1 th:text="${ressource.titre}">Titre</h1>
+
+        <p>
+            <strong>Type :</strong> <span th:text="${ressource.type}">ARTICLE</span>
+        </p>
+
+        <p th:if="${ressource.categorie != null}">
+            <strong>Catégorie :</strong> <span th:text="${ressource.categorie.nom}">Respiration</span>
+        </p>
+
+        <hr/>
+
+        <div th:text="${ressource.contenu}">
+            Contenu
+        </div>
+    </div>
+
+    <script th:src="@{/JS/scripts.js}"></script>
+    </body>
+    </html>

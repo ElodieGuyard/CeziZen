@@ -20,16 +20,17 @@ p {
     padding-bottom: 10px;
 }
 
-ul {
-    padding-left: 50px;
-    padding-bottom: 10px;
-}
 
 /* Container principal avec marges responsives */
 .main-container {
     max-width: 1200px;    /* Largeur max desktop */
     margin: 0 auto;       /* Centre horizontal */
     padding: 20px 15px;   /* Marges gauche/droite */
+}
+
+ul.main-container {
+    padding-left: 50px;
+    padding-bottom: 10px;
 }
 
 /* Mobile : moins de marge */

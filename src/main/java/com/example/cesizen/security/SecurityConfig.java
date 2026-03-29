@@ -36,6 +36,7 @@ public class SecurityConfig {
                                     "/ressources",
                                     "/respiration",
                                     "/ressources/add",
+                                    "/ressources/**",
                                     "/users/create",
                                     "/favicon.ico"
                             ).permitAll()
