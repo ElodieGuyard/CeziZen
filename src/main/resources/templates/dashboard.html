@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CESI ZEN Home page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/CSS/styles.css}">
+</head>
+<header>
+    <div th:replace="fragments/navFragment :: nav"></div>
+</header>
+<div class="main-container">
+    <h1>Liste des ressources</h1>
+    <ul>
+        <li th:each="res : ${ressources}">
+            <strong th:text="${res.type}">Type</strong> -
+            <span th:text="${res.titre}">Titre</span>
+            <a th:href="@{/ressources/{id}(id=${res.id})}">Lien</a>
+        </li>
+    </ul>
+</div>
+<--  https://stackoverflow.com/questions/65464444/submitting-checkboxes-with-thymeleaf-springboot !-->
+<div class="main-container">
+    <h1>Liste des users</h1>
+    <ul>
+        <li th:each="user : ${users}">
+            <strong th:text="${user.nom}">Nom</strong> -
+            <span th:text="${user.enabled}">Enabled</span>
+            <a th:href="@{/ressources/{id}(id=${res.id})}">Modifier Enable / disable</a>
+
+            <form th:action="@{/users/enable}" th:object="${userEnable}" method="post">
+                <div class="form-group required-control">
+                    <label for="gre">Enable</label>
+                    <input id="gre" type="checkbox" name="gre" th:checked="*{gre1}" />
+                    <label for="gre2">Disable</label>
+                    <input id="gre2" type="checkbox" name="gre2" th:checked="*{gre2}" />
+                </div>
+            <button type="submit" class="btn-submit">Soumettre</button>
+            </form>
+            <form th:action="@{/users/delete}" th:object="${userDelete}" method="post">
+                <button type="submit" class="btn-submit">Supprimer l'utilisateur</button>
+            </form>
+        </li>
+    </ul>
+</div>
+<script th:src="@{/JS/scripts.js}"></script>
+</body>
+</html>
