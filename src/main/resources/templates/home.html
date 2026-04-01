@@ -6,12 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/CSS/styles.css}">
 </head>
-    <header>
-        <div th:replace="fragments/navFragment :: nav"></div>
-    </header>
     <body>
-        <p th:text="|Hello, ${name}!|" />
-
-        <script th:src="@{/JS/scripts.js}"></script>
+        <header>
+            <div th:replace="fragments/navFragment :: nav"></div>
+        </header>
+        <div class="main-container">
+            <h1>Bienvenue sur le site cesiZen !</h1>
+            <div th:each="res : ${ressources}">
+            <h1 th:text="${res.titre}">Titre</h1>
+            <p>
+                <strong>Type :</strong> <span th:text="${res.type}">ARTICLE</span>
+            </p>
+                <p> <span th:text="${res.contenu}" class="ellipsis-content">content</span>
+                </p>
+            </div>
+            <script th:src="@{/JS/scripts.js}"></script>
+        </div>
     </body>
 </html>

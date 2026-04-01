@@ -102,3 +102,10 @@ ul.main-container {
         display: block;
     }
 }
+
+.ellipsis-content {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;      /* nombre de lignes */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
