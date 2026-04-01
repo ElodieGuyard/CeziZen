@@ -13,22 +13,24 @@
     <div th:replace="fragments/navFragment :: nav"></div>
 </header>
 <body>
-<h1>Please Log In</h1>
-<div th:if="${param.error}">
-    Invalid username and password.</div>
-<div th:if="${param.logout}">
-    You have been logged out.</div>
-<form th:action="@{/login}" method="post">
-    <div>
-        <input type="text" name="username" placeholder="Username"/>
+    <div class="main-container">
+        <h1>Se connecter</h1>
+        <div th:if="${param.error}">
+            Invalid username and password.</div>
+        <div th:if="${param.logout}">
+            You have been logged out.</div>
+        <form th:action="@{/login}" method="post">
+            <div>
+                <input type="text" name="username" placeholder="Username"/>
+            </div>
+            <div>
+                <input type="password" name="password" placeholder="Password"/>
+            </div>
+            <input type="submit" value="Log in" />
+        </form>
+        <p><a href="/users/create">Pas encore enregistré ? Créer son compte</a></p>
+        <script th:src="@{/JS/scripts.js}"></script>
     </div>
-    <div>
-        <input type="password" name="password" placeholder="Password"/>
-    </div>
-    <input type="submit" value="Log in" />
-</form>
-<p><a href="/users/create">Pas encore enregistré ? Créer son compte</a></p>
-<script th:src="@{/JS/scripts.js}"></script>
 </body>
 
 </html>

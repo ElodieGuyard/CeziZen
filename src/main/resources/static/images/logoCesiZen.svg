@@ -1,0 +1,15 @@
+<svg width="250" height="150" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- Bonhomme assis en tailleur -->
+    <ellipse cx="60" cy="40" rx="9" ry="12" fill="none" stroke="black" stroke-width="3"/>
+    <path d="M40 75 L60 95 L80 75 L60 55 Z" fill="none" stroke="black" stroke-width="3"/>
+    <path d="M20 100 Q40 120 60 100 Q40 80 20 100 M60 100 Q80 120 100 100 Q80 80 60 100"
+          fill="none" stroke="black" stroke-width="3"/>
+6
+    <!-- Texte "CESI ZEN" -->
+    <text x="120" y="60" font-family="Arial" font-size="50" font-weight="bold">CESI</text>
+    <text x="120" y="100" font-family="Arial" font-size="50" font-weight="bold">ZEN</text>
+
+    <!-- Légende centrée -->
+    <text x="150" y="135" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle">L'APPLICATION DE VOTRE</text>
+    <text x="150" y="155" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle">SANTE MENTALE</text>
+</svg>
