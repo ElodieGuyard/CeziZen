@@ -20,7 +20,7 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping(path="/auth") // Map ONLY POST Requests
+    @PostMapping(path="/auth") // Map ONLY POST Requests //TODO a vérifier, deviens useless une fois spring security configuré
     public @ResponseBody ResponseEntity<String> checkLogin(@RequestBody LoginRequest request) {
         String login = request.getLogin();
         String password = request.getPassword();

@@ -10,10 +10,10 @@ import java.util.Date;
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
-    private String nom_utilisateur;
+    private String nom;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
@@ -34,10 +34,11 @@ public class User {
     private Date deleted_at;
     private boolean enabled;
 
-    public User() {}
+    public User() {
+    }
 
-    public User(String nom_utilisateur, Role role, String mot_de_passe) {
-        this.nom_utilisateur = nom_utilisateur;
+    public User(String nom, Role role, String mot_de_passe) {
+        this.nom = nom;
         this.role = role;
         this.mot_de_passe = mot_de_passe;
     }
@@ -51,18 +52,18 @@ public class User {
     }
 
     public String getName() {
-        return nom_utilisateur;
+        return nom;
     }
 
     public void setName(String name) {
-        this.nom_utilisateur = name;
+        this.nom = name;
     }
 
-    public Role getRole(){
+    public Role getRole() {
         return this.role;
     }
 
-    public void setRole(Role role){
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -98,8 +99,7 @@ public class User {
         this.deleted_at = deleted_at;
     }
 
-    public String getMot_de_passe
-            (){
+    public String getMot_de_passe() {
         return this.mot_de_passe;
     }
 
@@ -107,8 +107,15 @@ public class User {
         this.mot_de_passe = mot_de_passe;
     }
 
-    public boolean setEnabled() { //compte actif ?
-        return enabled;
+    public void setEnabled() { //compte actif ?
+        this.enabled = true;
+    }
+
+    public void setDisable() {
+        this.enabled = false;
+    }
+
+    public boolean isEnabled() {
+        return this.enabled;
     }
 }
-

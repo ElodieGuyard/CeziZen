@@ -24,8 +24,8 @@
         <!-- Formulaire de création -->
         <form th:action="@{/users/create}" th:object="${user}" method="post">
             <div class="form-group">
-                <label for="name">Nom d'utilisateur :</label>
-                <input type="text" id="name" th:field="*{name}" required>
+                <label for="username">Nom d'utilisateur :</label>
+                <input type="text" id="username" th:field="*{name}" required>
             </div>
 
             <div class="form-group">
