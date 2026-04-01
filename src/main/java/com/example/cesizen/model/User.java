@@ -13,7 +13,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
-    private String nom_utilisateur;
+    private String nom;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
@@ -37,8 +37,8 @@ public class User {
     public User() {
     }
 
-    public User(String nom_utilisateur, Role role, String mot_de_passe) {
-        this.nom_utilisateur = nom_utilisateur;
+    public User(String nom, Role role, String mot_de_passe) {
+        this.nom = nom;
         this.role = role;
         this.mot_de_passe = mot_de_passe;
     }
@@ -52,11 +52,11 @@ public class User {
     }
 
     public String getName() {
-        return nom_utilisateur;
+        return nom;
     }
 
     public void setName(String name) {
-        this.nom_utilisateur = name;
+        this.nom = name;
     }
 
     public Role getRole() {
@@ -99,8 +99,7 @@ public class User {
         this.deleted_at = deleted_at;
     }
 
-    public String getMot_de_passe
-            () {
+    public String getMot_de_passe() {
         return this.mot_de_passe;
     }
 
@@ -114,5 +113,9 @@ public class User {
 
     public void setDisable() {
         this.enabled = false;
+    }
+
+    public boolean isEnabled() {
+        return this.enabled;
     }
 }
