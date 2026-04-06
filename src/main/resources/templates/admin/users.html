@@ -15,6 +15,7 @@
     <ul>
         <li th:each="user : ${users}">
             <strong th:text="${user.name}">Type</strong> -
+            <a th:href="@{'/admin/users/' + ${user.id} + '/edit'}">Modifier</a>
         </li>
     </ul>
 </div>
