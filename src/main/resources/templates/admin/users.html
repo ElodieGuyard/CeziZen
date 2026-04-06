@@ -11,7 +11,7 @@
     <div th:replace="fragments/navFragment :: nav"></div>
 </header>
 <div class="main-container">
-    <h1>Liste des ressources</h1>
+    <h1>Liste des utilisateurs</h1>
     <ul>
         <li th:each="user : ${users}">
             <strong th:text="${user.name}">Type</strong> -
