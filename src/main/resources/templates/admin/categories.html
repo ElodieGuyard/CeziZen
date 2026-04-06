@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Admin - Catégories</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/CSS/styles.css}">
+</head>
+<body>
+<header>
+    <div th:replace="fragments/navFragment :: nav"></div>
+</header>
+
+<div class="main-container">
+    <h1>Catégories</h1>
+
+    <p>
+        <a th:href="@{/admin/dashboard}">Retour dashboard</a>
+        &nbsp;|&nbsp;
+        <a th:href="@{/admin/ressources}">Ressources</a>
+    </p>
+
+    <h2>Ajouter une catégorie</h2>
+    <form th:action="@{/admin/categories/new}" th:object="${newCategorie}" method="post">
+        <input type="text" th:field="*{nom}" placeholder="Nom catégorie" required>
+        <button type="submit">Ajouter</button>
+    </form>
+
+    <h2>Liste</h2>
+    <ul>
+        <li th:each="c : ${categories}">
+            <span th:text="${c.nom}">Nom</span>
+
+            <form th:action="@{/admin/categories/{id}/delete(id=${c.id})}" method="post" style="display:inline">
+                <button type="submit" onclick="return confirm('Supprimer cette catégorie ?')">Supprimer</button>
+            </form>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

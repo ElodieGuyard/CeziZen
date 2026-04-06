@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Admin - Nouvelle ressource</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/CSS/styles.css}">
+</head>
+<body>
+<header>
+    <div th:replace="fragments/navFragment :: nav"></div>
+</header>
+
+<div class="main-container">
+    <h1>Créer une ressource</h1>
+
+    <form th:action="@{/admin/ressources/new}" th:object="${form}" method="post">
+        <div>
+            <label>Catégorie</label>
+            <select th:field="*{categorieId}" required>
+                <option value="" disabled selected>-- Choisir --</option>
+                <option th:each="c : ${categories}"
+                        th:value="${c.id}"
+                        th:text="${c.nom}">
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <label>Titre</label>
+            <input type="text" th:field="*{titre}" required>
+        </div>
+
+        <div>
+            <label>Type</label>
+            <select th:field="*{type}" required>
+                <option th:each="t : ${types}"
+                        th:value="${t}"
+                        th:text="${t}">
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <label>Contenu</label>
+            <textarea th:field="*{contenu}" rows="8" required></textarea>
+        </div>
+
+        <button type="submit">Créer</button>
+        <a th:href="@{/admin/ressources}">Annuler</a>
+    </form>
+</div>
+
+</body>
+</html>

@@ -28,12 +28,6 @@ public class AdminController {
         return "admin/dashboard";
     }
 
-    @GetMapping("/ressources")
-    public String showRessources(Model model) {
-        model.addAttribute("ressources", resourceRepository.findAll());
-        return "admin/ressources";
-    }
-
     @GetMapping("/users")
     public String showUsers(Model model) {
         model.addAttribute("users", userRepository.findAll());
@@ -66,4 +60,8 @@ public class AdminController {
         userRepository.save(user);
         return "redirect:/admin/users";
     }
+
+    //gestion ressources :
+
+
 }
