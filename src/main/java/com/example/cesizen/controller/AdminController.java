@@ -22,15 +22,15 @@ public class AdminController {
         return "admin/dashboard";
     }
 
-    @GetMapping
+    @GetMapping("/ressources")
     public String showRessources(Model model) {
         model.addAttribute("ressources", resourceRepository.findAll());
         return "admin/ressources";
     }
 
-    @GetMapping
+    @GetMapping("/users")
     public String showUsers(Model model) {
-        model.addAttribute("ressources", userRepository.findAll());
+        model.addAttribute("users", userRepository.findAll());
         return "admin/users";
     }
 }
