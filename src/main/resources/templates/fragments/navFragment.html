@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr-FR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <body>
 <nav class="menu">
     <ul class="menu-links">
@@ -8,6 +8,9 @@
         <li><a th:href="@{/categories}">CATEGORIES</a></li>
         <li><a th:href="@{/respiration}">EXERCICE</a></li>
         <li><a th:href="@{/sos}">SOS</a></li>
+        <li sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/admin/dashboard}">ADMIN</a>
+        </li>
     </ul>
     <div class="menu-toggle">☰</div>
     <img th:src="@{/images/logoCesiZen.svg}" alt="logo cesizen" style="float:right" width="15%"/>
