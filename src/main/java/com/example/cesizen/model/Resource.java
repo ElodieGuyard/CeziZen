@@ -10,7 +10,7 @@ public class Resource {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     // Clé étrangère vers Catégorie
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categorie_id", nullable = false)  // Colonne FK en base
@@ -42,11 +42,11 @@ public class Resource {
     public Resource(){
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
