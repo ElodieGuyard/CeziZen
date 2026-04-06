@@ -47,7 +47,6 @@ public class SecurityConfig {
                                     "/categories",
                                     "/ressources",
                                     "/respiration",
-                                    "/ressources/add",
                                     "/ressources/**",
                                     "/users/create",
                                     "/favicon.ico"
