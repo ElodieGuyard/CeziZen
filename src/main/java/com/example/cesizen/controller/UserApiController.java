@@ -39,13 +39,13 @@ public class UserApiController {
         }
 
         @GetMapping(path="/{id}")
-        public User getUser(@PathVariable Integer id) {
+        public User getUser(@PathVariable Long id) {
             return userRepository.findById(id).get();
         }
 
         //TODO changer en RequestBody plutôt
         @PutMapping(path="/update") // modifie seulement le nom de l'utilisateur et met à jour la date de modification
-        public @ResponseBody String updateUser(@RequestParam Integer Id, @RequestParam String name){
+        public @ResponseBody String updateUser(@RequestParam Long Id, @RequestParam String name){
             userRepository.findById(Id).ifPresent(u -> {
                 u.setName(name);
                 u.setModifie_le(new Date());
@@ -56,7 +56,7 @@ public class UserApiController {
         }
 
         @DeleteMapping(path="/delete")
-        public @ResponseBody String deleteById(@RequestParam Integer Id){
+        public @ResponseBody String deleteById(@RequestParam Long Id){
             userRepository.deleteById(Id);
             return "Deleted"; // return http status 200 ?
         }

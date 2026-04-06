@@ -6,6 +6,6 @@ package com.example.cesizen.repository;
 import com.example.cesizen.model.Resource;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ResourceRepository extends CrudRepository<Resource, Integer> {
+public interface ResourceRepository extends CrudRepository<Resource, Long> {
 
 }

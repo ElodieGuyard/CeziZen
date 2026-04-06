@@ -26,7 +26,7 @@ public class ResourceWebController {
 
     @GetMapping(path= "/{id}")
     public String showSingleRessources(Model model, @PathVariable String id){
-        Optional<Resource> resOpt = resourceRepository.findById(Integer.valueOf(id));
+        Optional<Resource> resOpt = resourceRepository.findById(Long.valueOf(id));
         if (resOpt.isEmpty()){
             return "error";
         } else {
