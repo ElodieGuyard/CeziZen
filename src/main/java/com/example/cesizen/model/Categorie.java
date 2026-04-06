@@ -5,13 +5,15 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Long.parseLong;
+
 @Entity
 @Table(name = "categorie")
 public class Categorie {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Column(nullable = false)
     private String nom;
 
@@ -22,9 +24,7 @@ public class Categorie {
     public Categorie() {};
 
     // désérialisation string vers Int
-    public Categorie(String id) {
-        this.id = Integer.parseInt(id);
-    }
+    public Long getId() { return id; }
 
     public String getNom() {
         return nom;
