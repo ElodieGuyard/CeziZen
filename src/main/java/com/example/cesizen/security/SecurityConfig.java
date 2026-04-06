@@ -54,7 +54,7 @@ public class SecurityConfig {
                             ).permitAll()
 
                             // ADMIN (admin)
-                            .requestMatchers("/admin/**").hasAnyRole("ADMINISTRATOR", "SUPERADMIN")
+                            .requestMatchers("/admin/**").hasRole("ADMIN")
 
                             // CONNECTÉ (citizen, admin)
                             .requestMatchers("/app/**").authenticated()
