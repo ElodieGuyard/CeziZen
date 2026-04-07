@@ -48,15 +48,14 @@ public class SecurityConfig {
                                     "/ressources",
                                     "/respiration",
                                     "/ressources/**",
-                                    "/users/create",
-                                    "/favicon.ico"
+                                    "/users/create"
                             ).permitAll()
 
                             // ADMIN (admin)
                             .requestMatchers("/admin/**").hasRole("ADMIN")
 
                             // CONNECTÉ (citizen, admin)
-                            .requestMatchers("/app/**").authenticated()
+                            //.requestMatchers("/app/**").authenticated()
 
                             // le reste: connecté (au début, c’est plus simple askip)
                             .anyRequest().authenticated()
