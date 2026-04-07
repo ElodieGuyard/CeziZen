@@ -12,7 +12,7 @@ import static java.lang.Long.parseLong;
 public class Categorie {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String nom;
@@ -32,9 +32,5 @@ public class Categorie {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public int getId(int id) {
-        return id;
     }
 }
