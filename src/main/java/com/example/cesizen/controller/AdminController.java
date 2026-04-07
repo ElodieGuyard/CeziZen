@@ -1,6 +1,7 @@
 package com.example.cesizen.controller;
 
 import com.example.cesizen.controller.admin.ResourceForm;
+import com.example.cesizen.controller.admin.UserForm;
 import com.example.cesizen.model.Categorie;
 import com.example.cesizen.model.Resource;
 import com.example.cesizen.model.Role;
@@ -42,23 +43,21 @@ public class AdminController {
 
     @GetMapping("/user_new")
     public String newUserForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("form", new UserForm());
         model.addAttribute("roles", Role.values());
         return "admin/user_new";
     }
 
     @PostMapping("/user_new")
-    public String create(@ModelAttribute("form") Userform userForm) {
-        // Vérifier si l'utilisateur existe déjà
-
-        User usr = userRepository.findById(userForm.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("Categorie not found id=" + form.getUserById()));
-
+    public String createUser(@ModelAttribute("form") UserForm form) {
         User user = new User();
-        user.setName(nom);
-        user.setRole(role);
-        user.setMot_de_passe(passwordEncoder.encode(mot_de_passe));
-        if (enabled) user.setEnabled();
+        user.setName(form.getLogin());
+        user.setMot_de_passe(passwordEncoder.encode(form.getPassword()));
+
+        // convertir "ADMIN"/"USER" (String) en enum Role
+        user.setRole(Role.valueOf(form.getRole()));
+
+        if (form.isEnabled()) user.setEnabled();
         else user.setDisable();
 
         userRepository.save(user);
@@ -92,7 +91,7 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    @PostMapping("users/{id}/delete")
+    @PostMapping("/users/{id}/delete")
     public String delete(@PathVariable Long id) {
         userRepository.deleteById(id);
         return "redirect:/admin/users";

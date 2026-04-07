@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       lang="fr">
 <head>
     <title>Admin - Créer un utilisateur</title>
@@ -15,7 +16,7 @@
 <div class="main-container">
     <h1>Créer un utilisateur</h1>
 
-    <form th:action="@{/admin/users}" method="post">
+    <form th:action="@{/admin/users/new}" method="post">
         <div class="form-group">
             <label for="nom">Nom d'utilisateur :</label>
             <input type="text" id="nom" name="nom" required>
