@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="fr">
+<head>
+    <title>Admin - Créer un utilisateur</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/CSS/styles.css}">
+</head>
+<body>
+<header>
+    <div th:replace="fragments/navFragment :: nav"></div>
+</header>
+
+<div class="main-container">
+    <h1>Créer un utilisateur</h1>
+
+    <form th:action="@{/admin/users}" method="post">
+        <div class="form-group">
+            <label for="nom">Nom d'utilisateur :</label>
+            <input type="text" id="nom" name="nom" required>
+        </div>
+
+        <div class="form-group">
+            <label for="mot_de_passe">Mot de passe :</label>
+            <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+        </div>
+
+        <div class="form-group">
+            <label for="role">Rôle :</label>
+            <select id="role" name="role" required>
+                <option th:each="r : ${roles}"
+                        th:value="${r}"
+                        th:text="${r}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="enabled" value="true">
+                Compte actif (enabled)
+            </label>
+        </div>
+
+        <button type="submit" class="btn-submit">Créer</button>
+        <a th:href="@{/admin/users}">Annuler</a>
+    </form>
+</div>
+
+<script th:src="@{/JS/scripts.js}"></script>
+</body>
+</html>

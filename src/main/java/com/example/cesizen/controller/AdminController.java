@@ -1,5 +1,8 @@
 package com.example.cesizen.controller;
 
+import com.example.cesizen.controller.admin.ResourceForm;
+import com.example.cesizen.model.Categorie;
+import com.example.cesizen.model.Resource;
 import com.example.cesizen.model.Role;
 import com.example.cesizen.model.User;
 import com.example.cesizen.repository.ResourceRepository;
@@ -37,20 +40,20 @@ public class AdminController {
         return "admin/users";
     }
 
-    @GetMapping("/users/new")
+    @GetMapping("/user_new")
     public String newUserForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", Role.values());
         return "admin/user_new";
     }
 
-    @PostMapping("/users/new")
-    public String createUser(
-            @RequestParam String nom,
-            @RequestParam Role role,
-            @RequestParam String mot_de_passe,
-            @RequestParam(name = "enabled", defaultValue = "false") boolean enabled
-    ) {
+    @PostMapping("/user_new")
+    public String create(@ModelAttribute("form") Userform userForm) {
+        // Vérifier si l'utilisateur existe déjà
+
+        User usr = userRepository.findById(userForm.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("Categorie not found id=" + form.getUserById()));
+
         User user = new User();
         user.setName(nom);
         user.setRole(role);
@@ -61,7 +64,6 @@ public class AdminController {
         userRepository.save(user);
         return "redirect:/admin/users";
     }
-
 
     @GetMapping("/users/{id}/edit")
     public String editUser(@PathVariable Long id, Model model) {
