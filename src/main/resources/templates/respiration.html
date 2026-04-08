@@ -6,53 +6,22 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" th:href="@{/CSS/styles.css}">
     <style>
-        body{
-            margin:0;
-            height:100vh;
-            display:block;
-            align-items:center;
-            justify-content:center;
-            color:#124375;
-        }
-
-        .wrap{
-            text-align:center;
-        }
-
         .cercle{
             width:180px;
             height:180px;
             border-radius:50%;
             background: #124375;
-            opacity:50;
+            opacity:0.5;
             margin:0 auto 18px;
-            animation:respire 10s ease-in-out infinite; /* 5s inspire + 5s expire */
+            transition: transform 1s linear; /* animation fluide pilotée en JS */
         }
 
-        .mot{
-            letter-spacing:.25em;
-            font-weight:600;
-            font-size:14px;
-            opacity:.85;
+        .mot span {
+            display: none;
         }
 
-        /* On affiche "INSPIRE" sur la 1ère moitié, "EXPIRE" sur la 2ème */
-        .inspire{ animation:afficheInspire 10s linear infinite; }
-        .expire { animation:afficheExpire  10s linear infinite; }
-
-        @keyframes respire{
-            0%,100%{ transform:scale(.7); } /* expire */
-            50%    { transform:scale(1.0); } /* inspire */
-        }
-
-        @keyframes afficheInspire{
-            0%,49.9%{ opacity:1; }
-            50%,100%{ opacity:0; }
-        }
-
-        @keyframes afficheExpire{
-            0%,49.9%{ opacity:0; }
-            50%,100%{ opacity:1; }
+        .mot span.visible {
+            display: inline-block;
         }
     </style>
 </head>
@@ -67,6 +36,75 @@
         <span class="expire">EXPIRE</span>
     </div>
 </div>
+<div id="exo-config"
+     th:data-inspiration="${exercice != null ? exercice.dureeInspiration : 5}"
+     th:data-apnee="${exercice != null ? exercice.dureeApnee : 0}"
+     th:data-expiration="${exercice != null ? exercice.dureeExpiration : 5}"></div>
+
+<form th:action="@{/respiration/config}" method="post">
+    <label>Durée inspiration (s) :
+        <input type="number" name="dureeInspiration" min="1" max="20" required />
+    </label>
+
+    <label>Durée apnée (s) :
+        <input type="number" name="dureeApnee" min="0" max="20" required />
+    </label>
+
+    <label>Durée expiration (s) :
+        <input type="number" name="dureeExpiration" min="1" max="20" required />
+    </label>
+
+    <button type="submit">Enregistrer</button>
+</form>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const cfgElem = document.getElementById('exo-config');
+
+        const dureeInspiration = parseInt(cfgElem.dataset.inspiration, 10) * 1000; // ms
+        const dureeApnee       = parseInt(cfgElem.dataset.apnee,       10) * 1000;
+        const dureeExpiration  = parseInt(cfgElem.dataset.expiration,  10) * 1000;
+
+        const cercle  = document.querySelector('.cercle');
+        const inspire = document.querySelector('.inspire');
+        const expire  = document.querySelector('.expire');
+
+        function montrerInspire() {
+            inspire.classList.add('visible');
+            expire.classList.remove('visible');
+            cercle.style.transform = 'scale(1.0)'; // on gonfle le cercle
+        }
+
+        function montrerExpire() {
+            inspire.classList.remove('visible');
+            expire.classList.add('visible');
+            cercle.style.transform = 'scale(0.7)'; // on dégonfle le cercle
+        }
+
+        function cacherTextes() {
+            inspire.classList.remove('visible');
+            expire.classList.remove('visible');
+        }
+
+        function lancerCycle() {
+            // inspiration
+            montrerInspire();
+            setTimeout(() => {
+                // apnée taille max, on cache le texte
+                cacherTextes();
+                setTimeout(() => {
+                    // expiration
+                    montrerExpire();
+                    setTimeout(() => {
+                        // on recommence
+                        lancerCycle();
+                    }, dureeExpiration);
+                }, dureeApnee);
+            }, dureeInspiration);
+        }
+
+        lancerCycle();
+    });
+</script>
 <script th:src="@{/JS/scripts.js}"></script>
 </body>
 </html>
