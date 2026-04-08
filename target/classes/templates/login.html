@@ -1,34 +1,36 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="fr">
+
 <head>
     <title>CESI ZEN Login Page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/styles.css">
 </head>
 <header>
-    <nav class="menu">
-        <ul class="menu-links">
-            <li><a href="/home">ACCUEIL</a></li>
-            <li><a href="#">CATEGORIES</a></li>
-            <li><a href="#">SOS</a></li>
-        </ul>
-        <div class="menu-toggle">☰</div>
-        <img src="images/logoCeziZen.png" alt="Grapefruit slice atop a pile of other slices" style="float:right" width="7%"/>
-    </nav>
-
+    <div th:replace="fragments/navFragment :: nav"></div>
 </header>
 <body>
-<p th:text="|Hello, please login !|" />
-
-<p th:if="${loginError}" class="error">Wrong user or password</p>
-<form th:action="@{/login.html}" method="post">
-    <label for="username">Username</label>:
-    <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
-    <label for="password">Password</label>:
-    <input type="password" id="password" name="password" /> <br />
-    <input type="submit" value="Log in" />
-</form>
-
+    <div class="main-container">
+        <h1>Se connecter</h1>
+        <div th:if="${param.error}">
+            Invalid username and password.</div>
+        <div th:if="${param.logout}">
+            You have been logged out.</div>
+        <form th:action="@{/login}" method="post">
+            <div>
+                <input type="text" name="username" placeholder="Username"/>
+            </div>
+            <div>
+                <input type="password" name="password" placeholder="Password"/>
+            </div>
+            <input type="submit" value="Log in" />
+        </form>
+        <p><a href="/users/create">Pas encore enregistré ? Créer son compte</a></p>
+        <script th:src="@{/JS/scripts.js}"></script>
+    </div>
 </body>
-<script src="JS/scripts.js"></script>
+
 </html>

@@ -3,22 +3,24 @@
 <head>
     <title>CESI ZEN Home page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="CSS/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/CSS/styles.css}">
 </head>
-    <header>
-        <nav class="menu">
-            <ul class="menu-links">
-                <li><a href="/home">ACCUEIL</a></li>
-                <li><a href="#">CATEGORIES</a></li>
-                <li><a href="#">SOS</a></li>
-            </ul>
-            <div class="menu-toggle">☰</div>
-            <img src="images/logoCeziZen.png" alt="Grapefruit slice atop a pile of other slices" style="float:right" width="7%"/>
-        </nav>
-
-    </header>
     <body>
-        <p th:text="|Hello, ${name}!|" />
+        <header>
+            <div th:replace="fragments/navFragment :: nav"></div>
+        </header>
+        <div class="main-container">
+            <h1>Bienvenue sur le site cesiZen !</h1>
+            <div th:each="res : ${ressources}">
+            <h1 th:text="${res.titre}">Titre</h1>
+            <p>
+                <strong>Type :</strong> <span th:text="${res.type}">ARTICLE</span>
+            </p>
+                <p> <span th:text="${res.contenu}" class="ellipsis-content">content</span>
+                </p>
+            </div>
+            <script th:src="@{/JS/scripts.js}"></script>
+        </div>
     </body>
-    <script src="JS/scripts.js"></script>
 </html>
