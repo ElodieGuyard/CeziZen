@@ -29,5 +29,27 @@ services :
       mysql_db:
         condition: service_healthy
 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cesizen_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/cesizen
+      SPRING_DATASOURCE_USERNAME: exampleUsr
+      SPRING_DATASOURCE_PASSWORD: examplePwd
+      SPRING_PROFILES_ACTIVE: prod
+
+      # Ajout pour correspondre à application-prod.properties
+      DB_URL: jdbc:mysql://mysql_db:3306/cesizen
+      DB_USER: exampleUsr
+      DB_PASSWORD: examplePwd
+    depends_on:
+      mysql_db:
+        condition: service_healthy
+
 volumes:
   mysql_data:
+
