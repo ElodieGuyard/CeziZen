@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface ExerPersoCoherenceCardiaqueRepository
         extends CrudRepository<ExerPersoCoherenceCardiaque, Long> {
 
-    Optional<ExerPersoCoherenceCardiaque> findByUtilisateurId(Integer UtilisateurId);
+    Optional<ExerPersoCoherenceCardiaque> findByUtilisateurId(Long UtilisateurId);
 }

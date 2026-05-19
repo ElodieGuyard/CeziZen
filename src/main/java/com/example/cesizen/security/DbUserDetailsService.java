@@ -22,7 +22,7 @@ public class DbUserDetailsService implements UserDetailsService {
         User u = userRepository.findUserBynom(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-        // Spring attend des rôles style "ROLE_USER"
+        // spring attend des rôles style "ROLE_USER"
         String role = "ROLE_" + u.getRole().name();
 
         return new org.springframework.security.core.userdetails.User(
