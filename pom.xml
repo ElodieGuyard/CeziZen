@@ -26,9 +26,12 @@
         <tag/>
         <url/>
     </scm>
+         
     <properties>
         <java.version>21</java.version>
+        <sonar.organization>elodieguyard</sonar.organization>
     </properties>
+         
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
