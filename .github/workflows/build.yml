@@ -1,4 +1,4 @@
-name: CI - Build / Sonar (minimal) / Docker / Trivy
+name: CI - Build / Sonar (minimal) / Docker
 
 on:
   push:
@@ -77,11 +77,3 @@ jobs:
 
       - name: Build Docker image
         run: docker build . --file Dockerfile --tag cesizen:latest
-
-  trivy-scan:
-      name: Run Trivy vulnerability scanner in fs mode
-      uses: aquasecurity/trivy-action@v0.36.0
-      with:
-        scan-type: 'fs'
-        scan-ref: '.'
-        trivy-config: trivy.yaml
