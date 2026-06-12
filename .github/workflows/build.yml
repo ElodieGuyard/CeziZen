@@ -1,5 +1,4 @@
-name: CI - Build / Sonar (minimal) / Docker
-
+name: CI - Build / Security / Quality / Docker
 on:
   push:
     branches:
@@ -29,12 +28,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2-
 
-      - name: Build (skip tests)
-        run: mvn -B clean package -DskipTests
+      - name: Build (skip tests temporairement le temps de les développer)
+        run: mvn -B clean package
 
-      - name: Depcheck
+      - name: Depcheck #OWASP Dependency Check : démarche DevSecOps pour identifier les CVE et surveillances des dépendances tierces
         uses: dependency-check/Dependency-Check_Action@main
-        continue-on-error: true
+        continue-on-error: false
         env:
           # actions/setup-java@v1 changes JAVA_HOME so it needs to be reset to match the depcheck image
           JAVA_HOME: /opt/jdk
@@ -48,6 +47,7 @@ jobs:
             --failOnCVSS 7
             --enableRetired
             --suppression dependencycheck-suppressions.xml
+        # Pour automatiser des réactions en conséquence du contenu de ce fichier ultérieurement
         # Upload du rapport Depcheck (vulnérabilités dépendances)
 
       - name: Upload Dependency Check report
@@ -67,7 +67,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: surefire-test-report
-          path: CesiZen/target/surefire-reports/
+          path: target/surefire-reports/
 
       - name: Upload artifact (jar)
         uses: actions/upload-artifact@v4
@@ -75,7 +75,7 @@ jobs:
           name: app-jar
           path: target/*.jar
 
-  sonar:
+  sonar: # Couvre la qualité du code, la dette technique, les bugs potentiels, la sécurité
     name: Build and analyze
     needs: build
     runs-on: ubuntu-latest
@@ -105,7 +105,8 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ElodieGuyard_CeziZen
-  docker-build:
+
+  docker-build: # industrialisation, reproductibilité du déploiement
     name: Build Docker image
     needs: build
     runs-on: ubuntu-latest
