@@ -7,7 +7,7 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   build:
-    name: Build JAR (skip tests)
+    name: Build JAR
     runs-on: ubuntu-latest
     steps:
       #Récupère le code source du repo dans le runner pour build à partir de l'action checkout pour docker build
@@ -105,6 +105,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ElodieGuyard_CeziZen
+      # ça rebuild ici, mais dans ce contexte de dev, ça remonte des informations pertinentes
 
   docker-build: # industrialisation, reproductibilité du déploiement
     name: Build Docker image
