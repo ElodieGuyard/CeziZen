@@ -3,7 +3,7 @@ name: test.yml
 on:
   push:
     branches:
-      - main
+      - DEV
   pull_request:
     types: [opened, synchronize, reopened]
 
