@@ -37,6 +37,7 @@ services :
     labels:
       wud.tag.include: "release"
       wud.trigger: "restart"
+      wud.watch: "digest" #Permet de dire à WUD de regarder les changements de contenu de l'image, pas juste le numéro de version (semantic versioning)
   wud:
     image: getwud/wud
     container_name: wud
