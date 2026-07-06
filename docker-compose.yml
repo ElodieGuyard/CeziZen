@@ -21,7 +21,7 @@ services :
       retries: 20
 
   app:
-    image: ghcr.io/elodieguyard/cesizen:latest
+    image: ghcr.io/elodieguyard/cesizen:release
     container_name: cesizen_app
     ports:
       - "8080:8080"
