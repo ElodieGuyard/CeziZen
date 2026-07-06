@@ -9,9 +9,16 @@ Start the application with:
 
 according to the forwarded port in virtualbox ubuntu server
 
-
-`sudo docker run -d -p 8080:8080 ghcr.io/elodieguyard/cezizen:release
-1c38b991dfc858cd17c2073762275d131550ec4e42947417e3203bc7ed32276b`
+Copy the docker-compose.yml file to the VM
+next to it, create a .env file with the following content :
+```
+DB_URL=
+DB_USER=
+DB_PASSWORD=
+```
+All credentials for mySQL are in clear in the docker file :')
+Security bof
+`docker compose --env-file .env up`
 
 
 ### fonctionnement de WUD :
@@ -41,3 +48,7 @@ un pull et un redémarrage du conteneur concerné.
    docker restart
 
 ```
+Pour la partie 4. Action, on ajoute dans `docker-compose.yml` sous l'app, 
+`wud.tag.include: "release"` et `wud.trigger: "restart"` qui signifie :
+surveille ce container-là et faire un restart dès qu'une nouvelle image
+avec le tag release existe.
