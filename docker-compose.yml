@@ -21,7 +21,7 @@ services :
       retries: 20
 
   app:
-    image: ghcr.io/elodieguyard/cesizen:release
+    image: ghcr.io/elodieguyard/cesizen:1.0.3
     container_name: cesizen_app
     ports:
       - "8080:8080"
@@ -30,14 +30,18 @@ services :
       SPRING_DATASOURCE_USERNAME: ${DB_USER}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_PROFILES_ACTIVE: prod
-
     depends_on:
       mysql_db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     labels:
-      wud.tag.include: "release"
       wud.trigger: "restart"
-      wud.watch: "digest" #Permet de dire à WUD de regarder les changements de contenu de l'image, pas juste le numéro de version (semantic versioning)
+      wud.enable: "true"
+
   wud:
     image: getwud/wud
     container_name: wud
@@ -46,7 +50,13 @@ services :
       - "3000:3000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-
+    environment:
+      WUD_LOG_LEVEL: info
+      WUD_TRIGGER_TYPE: docker-api
+      WUD_TRIGGER_DOCKER_SOCK: /var/run/docker.sock
+    depends_on:
+      app:
+        condition: service_healthy
 volumes:
   mysql_data:
 

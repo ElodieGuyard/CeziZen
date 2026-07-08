@@ -56,5 +56,5 @@ jobs:
           build-args: |
             VERSION=1.0.3
           tags: |
-            ghcr.io/elodieguyard/cesizen:1.0.4
+            ghcr.io/elodieguyard/cesizen:1.0.5
           labels: ${{ steps.meta.outputs.labels }}
