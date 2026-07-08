@@ -54,5 +54,5 @@ jobs:
           push: true
           platforms: linux/amd64
           tags: |
-            ghcr.io/elodieguyard/cesizen:1.0.3
+            ghcr.io/elodieguyard/cesizen:1.0.4
           labels: ${{ steps.meta.outputs.labels }}
