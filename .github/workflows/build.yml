@@ -1,16 +1,25 @@
-name: CI - Build / Security / Quality / Docker
+name: CI/CD - Build, Security, Quality & Deploy
+
 on:
   push:
     branches:
       - main
+      - release
   pull_request:
     types: [opened, synchronize, reopened]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
+  # ============================================
+  # 1. BUILD & UNIT TESTS
+  # ============================================
   build:
-    name: Build JAR
+    name: Build JAR & Run Tests
     runs-on: ubuntu-latest
     steps:
-      #Récupère le code source du repo dans le runner pour build à partir de l'action checkout pour docker build
       - name: Checkout
         uses: actions/checkout@v6
 
@@ -21,99 +30,168 @@ jobs:
           java-version: '21'
 
       - name: Cache Maven local repository
-        uses: actions/cache@v4 # Mis en cache des dépendances Maven pour build plus rapidement et réduire le trafic réseau
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-m2-
 
-      - name: Build (skip tests temporairement le temps de les développer)
+      - name: Build with Maven
         run: mvn -B clean package
 
-      - name: Depcheck #OWASP Dependency Check : démarche DevSecOps pour identifier les CVE et surveillances des dépendances tierces
-        uses: dependency-check/Dependency-Check_Action@main
-        continue-on-error: true #temporairement à true pour aller jusqu'au déploiement a des fins de dev
-        env:
-          # actions/setup-java@v1 changes JAVA_HOME so it needs to be reset to match the depcheck image
-          JAVA_HOME: /opt/jdk
-        id: Depcheck
-        with:
-          project: 'CesiZen Backend'
-          path: '.'
-          format: 'HTML'
-          out: 'reports' # this is the default, no need to specify unless you wish to override it
-          args: >
-            --failOnCVSS 7
-            --enableRetired
-            --disableCentral
-        # L’analyse OWASP s’appuie sur plusieurs sources. Maven Central peut parfois être indisponible ou limiter les requêtes dans les environnements CI.
-        #Ce n’est pas bloquant car les principales bases de vulnérabilités (NVD) restent utilisées
-
-      - name: Upload Dependency Check report
-        uses: actions/upload-artifact@v4
-        if: always()  # Important : uploade même si le job échoue
-        with:
-          name: Depcheck report
-          path: reports/dependency-check-report.html
-
-        # Display Dependency Check Results (optionnel)
-      - name: Display Dependency Check Results
-        if: always()
-        run: cat reports/dependency-check-report.html | grep -oP 'vulnerability.*?</td>' || echo "Report generated"
-
-      # Upload des résultats de tests
       - name: Upload Test Results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: surefire-test-report
           path: target/surefire-reports/
 
-      - name: Upload artifact (jar)
+      - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-jar
           path: target/*.jar
 
-  sonar: # Couvre la qualité du code, la dette technique, les bugs potentiels, la sécurité
-    name: Build and analyze
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Set up JDK 21
-        uses: actions/setup-java@c1e323688fd81a25caa38c78aa6df2d33d3e20d9 # v4.8.0
-        with:
-          java-version: 21
-          distribution: 'zulu' # Alternative distribution options are available.
-      - name: Cache SonarQube packages
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Maven packages
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Build and analyze
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ElodieGuyard_CeziZen
-      # ça rebuild ici, mais dans ce contexte de dev, ça remonte des informations pertinentes
-
-  docker-build: # industrialisation, reproductibilité du déploiement
-    name: Build Docker image
+  # ============================================
+  # 2. SECURITY - OWASP Dependency Check
+  # ============================================
+  security-depcheck:
+    name: OWASP Dependency Check
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Build Docker image
-        run: docker build . --file Dockerfile --tag cesizen:latest
+      - name: Run Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        continue-on-error: true
+        env:
+          JAVA_HOME: /opt/jdk
+        with:
+          project: 'CeziZen Backend'
+          path: '.'
+          format: 'HTML'
+          out: 'reports'
+          args: >
+            --failOnCVSS 7
+            --enableRetired
+            --disableCentral
+
+      - name: Upload Dependency Check Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: depcheck-report
+          path: reports/dependency-check-report.html
+
+  # ============================================
+  # 3. QUALITY - SonarQube Analysis
+  # ============================================
+  sonar:
+    name: SonarQube Code Quality Analysis
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'temurin'
+
+      - name: Cache SonarQube packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Build and analyze with SonarQube
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ElodieGuyard_CeziZen
+
+  # ============================================
+  # 4. DOCKER BUILD & PUSH (only on release)
+  # ============================================
+  docker-build-push:
+    name: Build & Push Docker Image
+    needs: [build, security-depcheck, sonar]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/release'
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64
+          build-args: |
+            VERSION=1.0.5
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ steps.push.outputs.digest }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+        continue-on-error: true
+
+      - name: Upload Trivy scan results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-scan-report
+          path: trivy-results.sarif
+
+      - name: Generate artifact attestation
+        uses: actions/attest@v4
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
