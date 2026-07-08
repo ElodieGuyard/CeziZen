@@ -10,6 +10,13 @@ RUN mvn -B package
 
 # Stage 2: runtime
 FROM eclipse-temurin:21-jre-noble
+
+# Ajouter les labels pour WUD et les métadonnées
+LABEL org.opencontainers.image.title="CeziZen"
+LABEL org.opencontainers.image.description="CeziZen application"
+LABEL org.opencontainers.image.version="${VERSION:-1.0.0}"
+LABEL org.opencontainers.image.source="https://github.com/ElodieGuyard/CeziZen"
+
 # Créer un groupe et un utilisateur non-root
 RUN groupadd -r appgroup && useradd -r -g appgroup -m appuser
 
