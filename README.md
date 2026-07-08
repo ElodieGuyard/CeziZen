@@ -1,8 +1,5 @@
 # README
 
-Start the application with:
-```docker compose up```
-
 ### Access to the VM via ssh :
 
 `ssh ubuntu@localhost -p 2222`
